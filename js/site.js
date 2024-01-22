@@ -1,35 +1,42 @@
 function getValues() {
     let userMessage = document.getElementById('message').value;
 
-    let reversed = reverseString(userMessage)
+    if (userMessage.length < 2) {
+        Swal.fire({
+            icon: 'error',
+            backdrop: false,
+            title: 'Woops!',
+            text: 'Please enter at least 2 characters to reverse'
+        });
 
-    displayMessage(reversed);
-
-}
-
-function reverseString(inputString){
-    // turn thestring to array
-    let characters = inputString.split('');
-    let result = [];
-
-    // loop through the array from te end towards the beginning
-    for(let index = characters.length - 1; index >= 0; index = index - 1){
-        let letter = characters[index];
-        // put each letter into a new array
-        result.push(letter);
+        return;
     }
 
-    // trun the new array back into a string
-    let resultAsString = result.join('');
+    let reversed = reverseString(userMessage);
 
-    // return the string
-    return resultAsString;
+    let stringObject = {
+        input: userMessage,
+        reversedInput: reversed
+    };
+
+    displayMessage(stringObject);
 }
 
-function displayMessage(reversedString){
+function reverseString(inputString) {
+    let result = '';
+
+    // loop through the array from the end towards the beginning
+    for (let index = inputString.length - 1; index >= 0; index--) {
+        result += inputString[index];
+    }
+
+    return result;
+}
+
+function displayMessage(stringObject) {
     // put our message in the HTML
-    document.getElementById('result').innerHTML = `Your message reversed is: ${reversedString}`;
+    document.getElementById('result').innerHTML =
+        `You entered: ${stringObject.input}. Your message reversed is: ${stringObject.reversedInput}`;
 
     document.getElementById('alert').classList.remove('invisible');
-
 }
