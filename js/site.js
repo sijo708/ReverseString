@@ -36,7 +36,7 @@ function reverseString(inputString) {
 function displayMessage(stringObject) {
     // put our message in the HTML
     document.getElementById('result').innerHTML =
-        `You entered: ${stringObject.input}. Your message reversed is: ${stringObject.reversedInput}`;
+        `You entered: <b>${stringObject.input}</b>. Your message reversed is: <b>${stringObject.reversedInput}</b>`;
 
     document.getElementById('alert').classList.remove('invisible');
 }
