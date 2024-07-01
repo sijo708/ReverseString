@@ -15,8 +15,8 @@ function getValues() {
     let reversed = reverseString(userMessage);
 
     let stringObject = {
-        input: userMessage,
-        reversedInput: reversed
+        input: escapeHTML(userMessage),
+        reversedInput: escapeHTML(reversed)
     };
 
     displayMessage(stringObject);
@@ -25,7 +25,7 @@ function getValues() {
 function reverseString(inputString) {
     let result = '';
 
-    // loop through the array from the end towards the beginning
+    // loop through the string from the end towards the beginning
     for (let index = inputString.length - 1; index >= 0; index--) {
         result += inputString[index];
     }
@@ -39,4 +39,16 @@ function displayMessage(stringObject) {
         `You entered: ${stringObject.input}. Your message reversed is: ${stringObject.reversedInput}`;
 
     document.getElementById('alert').classList.remove('invisible');
+}
+
+function escapeHTML(inputString) {
+    return inputString.replace(/[&<>'"]/g, function(match) {
+        switch (match) {
+            case '&': return '&amp;';
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case "'": return '&#39;';
+            case '"': return '&quot;';
+        }
+    });
 }
