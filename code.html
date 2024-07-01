@@ -94,8 +94,8 @@
                             let reversed = reverseString(userMessage);
                         
                             let stringObject = {
-                                input: userMessage,
-                                reversedInput: reversed
+                                input: escapeHTML(userMessage),
+                                reversedInput: escapeHTML(reversed)
                             };
                         
                             displayMessage(stringObject);
@@ -104,7 +104,7 @@
                         function reverseString(inputString) {
                             let result = '';
                         
-                            // loop through the array from the end towards the beginning
+                            // loop through the string from the end towards the beginning
                             for (let index = inputString.length - 1; index >= 0; index--) {
                                 result += inputString[index];
                             }
@@ -115,25 +115,53 @@
                         function displayMessage(stringObject) {
                             // put our message in the HTML
                             document.getElementById('result').innerHTML =
-                                `You entered: ${stringObject.input}. Your message reversed is: ${stringObject.reversedInput}`;
+                                `You entered: <b>${stringObject.input}</b>. Your message reversed is: <b>${stringObject.reversedInput}</b>`;
                         
                             document.getElementById('alert').classList.remove('invisible');
                         }
                         
-                    </code>>
+                        function escapeHTML(inputString) {
+                            return inputString.replace(/[&<>'"]/g, function(match) {
+                                switch (match) {
+                                    case '&': return '&amp;';
+                                    case '<': return '&lt;';
+                                    case '>': return '&gt;';
+                                    case "'": return '&#39;';
+                                    case '"': return '&quot;';
+                                }
+                            });
+                        }                        
+                        
+                    </code>
                 </pre>
             </div>
 
             <!-- The code's explanation -->
             <div class="col-12 col-lg-4">
-                <p>The code is structured in 3 functions</p>
+                <p>The code is structured in 4 functions</p>
                 <h5><code>getValues()</code></h5>
                 <p>
                     The <code>getValues</code> function gets the 
                     message from the input element and save it. If the message is less than 2 characters it shows an error.
                     If the input characters is 2 or more it will reverse the characters using reverseString. Then it creates 
                     an object with reversed and displays the reversedString.
-
+                </p>
+                <h5><code>reverseString()</code></h5>
+                <p>
+                    The <code>reverseString</code> function takes an input string and initializes an empty result string. 
+                    It then iterates through the input string from the last character to the first, appending each character to the result string, effectively reversing the input string. 
+                    Finally, it returns the reversed string.
+                </p>
+                <h5><code>displayMessage()</code></h5>
+                <p>
+                    The <code>displayMessage</code> function takes an object containing the original and reversed strings. 
+                    It updates the HTML element with id result to display these strings, and makes the alert element with id alert 
+                    visible by removing the invisible class.
+                </p>
+                <h5><code>escapeHTML()</code></h5>
+                <p>
+                    The <code>escapeHTML</code> function replaces special HTML characters in the input string with 
+                    their corresponding HTML entities to prevent HTML injection. It uses a regular expression to find these characters and a switch statement to replace them appropriately.
                 </p>
             </div>
         </div>
